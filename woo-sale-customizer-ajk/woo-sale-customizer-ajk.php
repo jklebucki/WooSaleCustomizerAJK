@@ -3,7 +3,7 @@
  * Plugin Name: WooSaleCustomizerAJK
  * Plugin URI: https://github.com/jklebucki/WooSaleCustomizerAJK
  * Description: Customizacja etykiety "Sale" w WooCommerce (AJK).
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Jarosław Kłębucki
  * Author URI: https://github.com/jklebucki
  * License: GPL v2 or later
