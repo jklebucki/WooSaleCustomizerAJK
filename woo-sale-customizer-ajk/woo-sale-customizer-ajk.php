@@ -10,17 +10,25 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: woo-sale-customizer-ajk
  * Domain Path: /languages
- * Requires at least: 5.5
- * Tested up to: 6.4
+ * Requires at least: 5.0
  * Requires PHP: 7.0
  * Requires Plugins: woocommerce
- * WC requires at least: 3.0
- * WC tested up to: 9.0
+ * WC requires at least: 3.0.0
+ * WC tested up to: 9.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Bezpośredni dostęp blokowany
 }
+
+/**
+ * Deklaracja kompatybilności z WooCommerce HFCS
+ */
+add_action( 'before_woocommerce_init', function() {
+    if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+    }
+} );
 
 /**
  * Sprawdź kompatybilność z WooCommerce
@@ -84,8 +92,8 @@ class WooSaleCustomizerAJK {
         // Dodanie strony ustawień w WooCommerce
         add_action( 'admin_menu', array( $this, 'add_admin_menu' ), 99 );
 
-        // Filtr WooCommerce – podmiana etykiety "Sale"
-        add_filter( 'woocommerce_sale_flash', array( $this, 'filter_sale_flash' ), 10, 3 );
+        // Filtr WooCommerce – podmiana etykiety "Sale" (wysoki priorytet aby nadpisać wszystkie inne)
+        add_filter( 'woocommerce_sale_flash', array( $this, 'filter_sale_flash' ), 999, 3 );
 
         // Dodanie CSS stylów do head
         add_action( 'wp_head', array( $this, 'output_styles' ) );
@@ -321,7 +329,7 @@ class WooSaleCustomizerAJK {
         <style id="woosale-customizer-ajk-styles">
         /* Style 1: Minimalistyczny */
         .woosale-style-1.onsale {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.85);
             color: #e74c3c;
             border: 2px solid #e74c3c;
             padding: 5px 12px;
@@ -334,7 +342,7 @@ class WooSaleCustomizerAJK {
 
         /* Style 2: Gradientowy */
         .woosale-style-2.onsale {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.85) 0%, rgba(255, 142, 83, 0.85) 100%);
             color: #ffffff;
             padding: 6px 14px;
             font-size: 12px;
@@ -347,7 +355,7 @@ class WooSaleCustomizerAJK {
 
         /* Style 3: Pulsujący */
         .woosale-style-3.onsale {
-            background: #e74c3c;
+            background: rgba(231, 76, 60, 0.85);
             color: #ffffff;
             padding: 6px 14px;
             font-size: 12px;
@@ -363,7 +371,7 @@ class WooSaleCustomizerAJK {
 
         /* Style 4: Z cieniem */
         .woosale-style-4.onsale {
-            background: #2c3e50;
+            background: rgba(44, 62, 80, 0.85);
             color: #ffffff;
             padding: 7px 15px;
             font-size: 13px;
@@ -376,7 +384,7 @@ class WooSaleCustomizerAJK {
 
         /* Style 5: Zaokrąglony */
         .woosale-style-5.onsale {
-            background: #ffb6c1;
+            background: rgba(255, 182, 193, 0.85);
             color: #8b4c6b;
             padding: 8px 16px;
             font-size: 12px;
@@ -388,7 +396,7 @@ class WooSaleCustomizerAJK {
 
         /* Style 6: Diagonalny */
         .woosale-style-6.onsale {
-            background: #e74c3c;
+            background: rgba(231, 76, 60, 0.85);
             color: #ffffff;
             padding: 8px 20px;
             font-size: 11px;
@@ -401,7 +409,7 @@ class WooSaleCustomizerAJK {
 
         /* Style 7: Z ikoną */
         .woosale-style-7.onsale {
-            background: #ff6b6b;
+            background: rgba(255, 107, 107, 0.85);
             color: #ffffff;
             padding: 6px 14px 6px 10px;
             font-size: 12px;
@@ -430,7 +438,7 @@ class WooSaleCustomizerAJK {
 
         /* Style 9: Neonowy */
         .woosale-style-9.onsale {
-            background: #0a0a0a;
+            background: rgba(10, 10, 10, 0.85);
             color: #00ffff;
             padding: 6px 14px;
             font-size: 12px;
@@ -444,7 +452,7 @@ class WooSaleCustomizerAJK {
 
         /* Style 10: Klasyczny premium */
         .woosale-style-10.onsale {
-            background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.85) 0%, rgba(184, 148, 31, 0.85) 100%);
             color: #ffffff;
             padding: 7px 16px;
             font-size: 12px;
