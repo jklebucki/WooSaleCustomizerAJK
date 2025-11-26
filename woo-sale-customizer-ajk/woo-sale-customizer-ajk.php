@@ -624,8 +624,14 @@ class WooSaleCustomizerAJK {
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
         }
         @keyframes woosale-pulse-2025 {
-            0%, 100% { box-shadow: 0 2px 10px rgba(220, 38, 38, 0.3); }
-            50% { box-shadow: 0 4px 16px rgba(220, 38, 38, 0.5); }
+            0%, 100% { 
+                box-shadow: 0 2px 10px rgba(220, 38, 38, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 4px 16px rgba(220, 38, 38, 0.5);
+                transform: scale(1.05);
+            }
         }
 
         /* Style 4: Premium shadow - UX 2025 */
