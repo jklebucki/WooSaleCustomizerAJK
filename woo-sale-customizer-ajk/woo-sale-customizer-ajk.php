@@ -1,10 +1,18 @@
 <?php
 /**
  * Plugin Name: WooSaleCustomizerAJK
+ * Plugin URI: https://github.com/jklebucki/WooSaleCustomizerAJK
  * Description: Customizacja etykiety "Sale" w WooCommerce (AJK).
- * Author: Jarosław Kłębucki
  * Version: 1.0.0
+ * Author: Jarosław Kłębucki
+ * Author URI: https://github.com/jklebucki
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: woo-sale-customizer-ajk
+ * Domain Path: /languages
+ * Requires at least: 5.5
+ * Tested up to: 6.4
+ * Requires PHP: 7.0
  * Requires Plugins: woocommerce
  * WC requires at least: 3.0
  * WC tested up to: 9.0
@@ -14,12 +22,59 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Bezpośredni dostęp blokowany
 }
 
+/**
+ * Sprawdź kompatybilność z WooCommerce
+ */
+function woosale_customizer_ajk_check_woocommerce() {
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        add_action( 'admin_notices', 'woosale_customizer_ajk_woocommerce_missing_notice' );
+        return false;
+    }
+
+    // WooCommerce sprawdza kompatybilność wersji na podstawie nagłówków wtyczki
+    // Tutaj sprawdzamy tylko czy klasa istnieje
+    return true;
+}
+
+/**
+ * Powiadomienie o braku WooCommerce
+ */
+function woosale_customizer_ajk_woocommerce_missing_notice() {
+    ?>
+    <div class="error">
+        <p>
+            <strong><?php esc_html_e( 'WooSale Customizer AJK', 'woo-sale-customizer-ajk' ); ?></strong> 
+            <?php esc_html_e( 'requires WooCommerce to be installed and active.', 'woo-sale-customizer-ajk' ); ?>
+        </p>
+    </div>
+    <?php
+}
+
+/**
+ * Powiadomienie o niekompatybilnej wersji WooCommerce
+ */
+function woosale_customizer_ajk_woocommerce_version_notice() {
+    ?>
+    <div class="error">
+        <p>
+            <strong><?php esc_html_e( 'WooSale Customizer AJK', 'woo-sale-customizer-ajk' ); ?></strong> 
+            <?php esc_html_e( 'requires WooCommerce version 3.0 or higher.', 'woo-sale-customizer-ajk' ); ?>
+        </p>
+    </div>
+    <?php
+}
+
 class WooSaleCustomizerAJK {
 
     const OPTION_KEY = 'woosale_customizer_ajk_label';
     const OPTION_STYLE_KEY = 'woosale_customizer_ajk_style';
 
     public function __construct() {
+        // Sprawdź kompatybilność z WooCommerce przed inicjalizacją
+        if ( ! woosale_customizer_ajk_check_woocommerce() ) {
+            return;
+        }
+
         // Ładowanie tłumaczeń
         add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 
@@ -417,4 +472,12 @@ class WooSaleCustomizerAJK {
     }
 }
 
-new WooSaleCustomizerAJK();
+// Inicjalizuj wtyczkę tylko jeśli WooCommerce jest dostępny
+add_action( 'plugins_loaded', 'woosale_customizer_ajk_init', 10 );
+
+function woosale_customizer_ajk_init() {
+    // Sprawdź kompatybilność przed inicjalizacją
+    if ( woosale_customizer_ajk_check_woocommerce() ) {
+        new WooSaleCustomizerAJK();
+    }
+}

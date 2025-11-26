@@ -79,3 +79,12 @@ msgstr "Neonowy"
 msgid "Klasyczny premium"
 msgstr "Klasyczny premium"
 
+msgid "WooSale Customizer AJK"
+msgstr "WooSale Customizer AJK"
+
+msgid "requires WooCommerce to be installed and active."
+msgstr "wymaga zainstalowania i aktywacji WooCommerce."
+
+msgid "requires WooCommerce version 3.0 or higher."
+msgstr "wymaga WooCommerce w wersji 3.0 lub wyższej."
+

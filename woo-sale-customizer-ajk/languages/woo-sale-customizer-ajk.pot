@@ -112,3 +112,15 @@ msgstr ""
 msgid "Klasyczny premium"
 msgstr ""
 
+#: woo-sale-customizer-ajk.php:50
+msgid "WooSale Customizer AJK"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:51
+msgid "requires WooCommerce to be installed and active."
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:65
+msgid "requires WooCommerce version 3.0 or higher."
+msgstr ""
+
