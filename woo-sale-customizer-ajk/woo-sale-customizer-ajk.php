@@ -410,237 +410,309 @@ class WooSaleCustomizerAJK {
         ob_start();
         ?>
         <style id="woosale-customizer-ajk-styles">
-        /* Style 1: Minimalistyczny */
+        /* Style 1: Minimalistyczny - UX 2025 */
         .woosale-style-1.onsale {
-            background: rgba(255, 255, 255, 0.85) !important;
-            color: #e74c3c !important;
-            border: 2px solid #e74c3c !important;
-            padding: 5px 12px !important;
-            font-size: 12px !important;
+            background: rgba(255, 255, 255, 0.98) !important;
+            color: #DC2626 !important;
+            border: 2px solid #DC2626 !important;
+            padding: 8px 16px !important;
+            font-size: 13px !important;
             font-weight: 600 !important;
             text-transform: uppercase !important;
-            letter-spacing: 0.5px !important;
-            border-radius: 3px !important;
-            line-height: normal !important;
-            display: inline-block !important;
+            letter-spacing: 0.8px !important;
+            border-radius: 6px !important;
+            line-height: 1.2 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
             position: absolute !important;
-            top: 10px !important;
-            left: 10px !important;
+            top: 12px !important;
+            left: 12px !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+            transition: transform 0.2s ease !important;
+        }
+        .woosale-style-1.onsale:hover {
+            transform: scale(1.05) !important;
         }
 
-        /* Style 2: Gradientowy */
+        /* Style 2: Gradientowy - UX 2025 */
         .woosale-style-2.onsale {
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.85) 0%, rgba(255, 142, 83, 0.85) 100%) !important;
+            background: linear-gradient(135deg, #EF4444 0%, #F97316 100%) !important;
             color: #ffffff !important;
-            padding: 6px 14px !important;
-            font-size: 12px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 1px !important;
-            border-radius: 4px !important;
-            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3) !important;
-            line-height: normal !important;
-            display: inline-block !important;
-            position: absolute !important;
-            top: 10px !important;
-            left: 10px !important;
-            z-index: 999 !important;
-            width: auto !important;
-            height: auto !important;
-            margin: 0 !important;
-            border: none !important;
-        }
-
-        /* Style 3: Pulsujący */
-        .woosale-style-3.onsale {
-            background: rgba(231, 76, 60, 0.85) !important;
-            color: #ffffff !important;
-            padding: 6px 14px !important;
-            font-size: 12px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            border-radius: 4px !important;
-            animation: woosale-pulse 2s ease-in-out infinite !important;
-            line-height: normal !important;
-            display: inline-block !important;
-            position: absolute !important;
-            top: 10px !important;
-            left: 10px !important;
-            z-index: 999 !important;
-            width: auto !important;
-            height: auto !important;
-            margin: 0 !important;
-            border: none !important;
-        }
-        @keyframes woosale-pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.9; }
-        }
-
-        /* Style 4: Z cieniem */
-        .woosale-style-4.onsale {
-            background: rgba(44, 62, 80, 0.85) !important;
-            color: #ffffff !important;
-            padding: 7px 15px !important;
+            padding: 8px 18px !important;
             font-size: 13px !important;
             font-weight: 700 !important;
             text-transform: uppercase !important;
-            border-radius: 4px !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3) !important;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
-            line-height: normal !important;
-            display: inline-block !important;
+            letter-spacing: 0.8px !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+            line-height: 1.2 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
             position: absolute !important;
-            top: 10px !important;
-            left: 10px !important;
+            top: 12px !important;
+            left: 12px !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
             border: none !important;
+            transition: all 0.3s ease !important;
+        }
+        .woosale-style-2.onsale:hover {
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35), 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+            transform: translateY(-2px) !important;
         }
 
-        /* Style 5: Zaokrąglony */
+        /* Style 3: Pulsujący - UX 2025 (subtelniejszy) */
+        .woosale-style-3.onsale {
+            background: #DC2626 !important;
+            color: #ffffff !important;
+            padding: 8px 18px !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border-radius: 8px !important;
+            animation: woosale-pulse-2025 3s ease-in-out infinite !important;
+            line-height: 1.2 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: absolute !important;
+            top: 12px !important;
+            left: 12px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25) !important;
+        }
+        @keyframes woosale-pulse-2025 {
+            0%, 100% { box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25); }
+            50% { box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4); }
+        }
+
+        /* Style 4: Premium shadow - UX 2025 */
+        .woosale-style-4.onsale {
+            background: #1F2937 !important;
+            color: #ffffff !important;
+            padding: 10px 20px !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border-radius: 10px !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+            text-shadow: none !important;
+            line-height: 1.2 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: absolute !important;
+            top: 12px !important;
+            left: 12px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            border: none !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        .woosale-style-4.onsale:hover {
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25), 0 6px 12px rgba(0, 0, 0, 0.2) !important;
+            transform: translateY(-3px) !important;
+        }
+
+        /* Style 5: Pill - UX 2025 */
         .woosale-style-5.onsale {
-            background: rgba(255, 182, 193, 0.85) !important;
-            color: #8b4c6b !important;
-            padding: 8px 16px !important;
-            font-size: 12px !important;
-            font-weight: 600 !important;
+            background: #FEF2F2 !important;
+            color: #DC2626 !important;
+            padding: 10px 20px !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
             text-transform: uppercase !important;
-            border-radius: 20px !important;
-            border: 2px solid #ff91a4 !important;
-            line-height: normal !important;
-            display: inline-block !important;
+            border-radius: 24px !important;
+            border: 2px solid #FCA5A5 !important;
+            line-height: 1.2 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
             position: absolute !important;
-            top: 10px !important;
-            left: 10px !important;
+            top: 12px !important;
+            left: 12px !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1) !important;
+            transition: all 0.2s ease !important;
+        }
+        .woosale-style-5.onsale:hover {
+            background: #FEE2E2 !important;
+            border-color: #F87171 !important;
+            transform: scale(1.03) !important;
         }
 
-        /* Style 6: Diagonalny */
+        /* Style 6: Ribbon - UX 2025 (mniej nachylony dla czytelności) */
         .woosale-style-6.onsale {
-            background: rgba(231, 76, 60, 0.85) !important;
+            background: #DC2626 !important;
             color: #ffffff !important;
-            padding: 8px 20px !important;
-            font-size: 11px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 1.5px !important;
-            transform: rotate(-5deg) !important;
-            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.4) !important;
-            line-height: normal !important;
-            display: inline-block !important;
-            position: absolute !important;
-            top: 10px !important;
-            left: 10px !important;
-            z-index: 999 !important;
-            width: auto !important;
-            height: auto !important;
-            margin: 0 !important;
-            border: none !important;
-        }
-
-        /* Style 7: Z ikoną */
-        .woosale-style-7.onsale {
-            background: rgba(255, 107, 107, 0.85) !important;
-            color: #ffffff !important;
-            padding: 6px 14px 6px 10px !important;
-            font-size: 12px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            border-radius: 4px !important;
-            line-height: normal !important;
-            display: inline-block !important;
-            position: absolute !important;
-            top: 10px !important;
-            left: 10px !important;
-            z-index: 999 !important;
-            width: auto !important;
-            height: auto !important;
-            margin: 0 !important;
-            border: none !important;
-        }
-        .woosale-style-7.onsale::before {
-            content: "🔥 " !important;
-            margin-right: 4px !important;
-        }
-
-        /* Style 8: Przezroczysty */
-        .woosale-style-8.onsale {
-            background: rgba(231, 76, 60, 0.85) !important;
-            color: #ffffff !important;
-            padding: 6px 14px !important;
-            font-size: 12px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            border-radius: 4px !important;
-            backdrop-filter: blur(5px) !important;
-            -webkit-backdrop-filter: blur(5px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            line-height: normal !important;
-            display: inline-block !important;
-            position: absolute !important;
-            top: 10px !important;
-            left: 10px !important;
-            z-index: 999 !important;
-            width: auto !important;
-            height: auto !important;
-            margin: 0 !important;
-        }
-
-        /* Style 9: Neonowy */
-        .woosale-style-9.onsale {
-            background: rgba(10, 10, 10, 0.85) !important;
-            color: #00ffff !important;
-            padding: 6px 14px !important;
-            font-size: 12px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            border-radius: 4px !important;
-            border: 2px solid #00ffff !important;
-            box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, inset 0 0 10px rgba(0, 255, 255, 0.2) !important;
-            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff !important;
-            line-height: normal !important;
-            display: inline-block !important;
-            position: absolute !important;
-            top: 10px !important;
-            left: 10px !important;
-            z-index: 999 !important;
-            width: auto !important;
-            height: auto !important;
-            margin: 0 !important;
-        }
-
-        /* Style 10: Klasyczny premium */
-        .woosale-style-10.onsale {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.85) 0%, rgba(184, 148, 31, 0.85) 100%) !important;
-            color: #ffffff !important;
-            padding: 7px 16px !important;
-            font-size: 12px !important;
+            padding: 10px 24px !important;
+            font-size: 13px !important;
             font-weight: 700 !important;
             text-transform: uppercase !important;
             letter-spacing: 1px !important;
-            border-radius: 4px !important;
-            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            line-height: normal !important;
-            display: inline-block !important;
+            transform: rotate(-3deg) !important;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+            line-height: 1.2 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
             position: absolute !important;
-            top: 10px !important;
-            left: 10px !important;
+            top: 12px !important;
+            left: 12px !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
+            border: none !important;
+            border-radius: 4px !important;
+            transition: transform 0.3s ease !important;
+        }
+        .woosale-style-6.onsale:hover {
+            transform: rotate(-3deg) scale(1.05) !important;
+        }
+
+        /* Style 7: Z ikoną - UX 2025 */
+        .woosale-style-7.onsale {
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%) !important;
+            color: #ffffff !important;
+            padding: 10px 20px 10px 18px !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border-radius: 8px !important;
+            line-height: 1.2 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            position: absolute !important;
+            top: 12px !important;
+            left: 12px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25) !important;
+            transition: all 0.3s ease !important;
+        }
+        .woosale-style-7.onsale::before {
+            content: "🔥" !important;
+            font-size: 16px !important;
+            margin: 0 !important;
+        }
+        .woosale-style-7.onsale:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35) !important;
+        }
+
+        /* Style 8: Glass morphism - UX 2025 */
+        .woosale-style-8.onsale {
+            background: rgba(220, 38, 38, 0.15) !important;
+            color: #1F2937 !important;
+            padding: 10px 20px !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border-radius: 12px !important;
+            backdrop-filter: blur(12px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+            border: 2px solid rgba(220, 38, 38, 0.3) !important;
+            line-height: 1.2 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: absolute !important;
+            top: 12px !important;
+            left: 12px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            box-shadow: 0 8px 32px rgba(220, 38, 38, 0.15) !important;
+            transition: all 0.3s ease !important;
+        }
+        .woosale-style-8.onsale:hover {
+            background: rgba(220, 38, 38, 0.25) !important;
+            border-color: rgba(220, 38, 38, 0.5) !important;
+        }
+
+        /* Style 9: Neon accent - UX 2025 (bardziej subtelny) */
+        .woosale-style-9.onsale {
+            background: #DC2626 !important;
+            color: #ffffff !important;
+            padding: 10px 20px !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border-radius: 8px !important;
+            border: 2px solid #FCA5A5 !important;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.4), 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+            text-shadow: none !important;
+            line-height: 1.2 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: absolute !important;
+            top: 12px !important;
+            left: 12px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            animation: woosale-neon-glow 2s ease-in-out infinite !important;
+        }
+        @keyframes woosale-neon-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.4), 0 4px 12px rgba(220, 38, 38, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(220, 38, 38, 0.6), 0 4px 12px rgba(220, 38, 38, 0.4); }
+        }
+
+        /* Style 10: Premium gold - UX 2025 */
+        .woosale-style-10.onsale {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important;
+            color: #ffffff !important;
+            padding: 10px 22px !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            border-radius: 10px !important;
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3), 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+            border: 2px solid rgba(255, 255, 255, 0.3) !important;
+            line-height: 1.2 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: absolute !important;
+            top: 12px !important;
+            left: 12px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        .woosale-style-10.onsale:hover {
+            box-shadow: 0 8px 28px rgba(245, 158, 11, 0.4), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+            transform: translateY(-2px) scale(1.02) !important;
         }
         </style>
         <?php
