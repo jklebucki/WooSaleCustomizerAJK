@@ -417,8 +417,9 @@ class WooSaleCustomizerAJK {
                             <?php esc_html_e( 'Podgląd', 'woo-sale-customizer-ajk' ); ?>
                         </th>
                         <td>
-                            <div style="position: relative; width: 300px; height: 200px; background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"300\" height=\"200\"><rect fill=\"%23f5f5f5\" width=\"300\" height=\"200\"/><text x=\"50%\" y=\"50%\" font-size=\"14\" fill=\"%23999\" text-anchor=\"middle\" dy=\".3em\">Podgląd produktu</text></svg>'); border: 1px solid #ddd; margin: 20px 0; border-radius: 8px; overflow: hidden;">
-                                <span class="onsale woosale-preview" id="woosale-preview">
+                            <div style="position: relative; width: 300px; height: 200px; background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%); border: 1px solid #ddd; margin: 20px 0; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                <span style="color: #999; font-size: 14px; position: absolute; z-index: 1;">Podgląd produktu</span>
+                                <span class="onsale woosale-preview" id="woosale-preview" style="z-index: 2;">
                                     <?php echo esc_html( $current_label ); ?>
                                 </span>
                             </div>
