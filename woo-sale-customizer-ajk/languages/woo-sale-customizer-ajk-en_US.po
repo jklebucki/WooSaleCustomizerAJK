@@ -1,0 +1,81 @@
+# English translation for WooSaleCustomizerAJK
+# Copyright (C) 2025 Jarosław Kłębucki
+# This file is distributed under the same license as the WooSaleCustomizerAJK package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: WooSaleCustomizerAJK 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-27 12:00+0000\n"
+"PO-Revision-Date: 2025-01-27 12:00+0000\n"
+"Last-Translator: Jarosław Kłębucki\n"
+"Language-Team: English\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "PROMOCJA"
+msgstr "SALE"
+
+msgid "Sale Customizer AJK"
+msgstr "Sale Customizer AJK"
+
+msgid "Settings saved."
+msgstr "Settings saved."
+
+msgid "WooSaleCustomizerAJK – Ustawienia"
+msgstr "WooSaleCustomizerAJK – Settings"
+
+msgid "Tekst etykiety \"Sale\""
+msgstr "Sale label text"
+
+msgid "Ten tekst pojawi się zamiast domyślnego \"Sale\" na produktach w promocji."
+msgstr "This text will appear instead of the default \"Sale\" on products on sale."
+
+msgid "Styl etykiety"
+msgstr "Label style"
+
+msgid "Wybierz styl wizualny etykiety sale."
+msgstr "Choose the visual style of the sale label."
+
+msgid "Podgląd"
+msgstr "Preview"
+
+msgid "Podgląd etykiety z wybranym stylem i tekstem."
+msgstr "Preview of the label with selected style and text."
+
+msgid "Zapisz"
+msgstr "Save"
+
+msgid "Minimalistyczny"
+msgstr "Minimalist"
+
+msgid "Gradientowy"
+msgstr "Gradient"
+
+msgid "Pulsujący"
+msgstr "Pulsating"
+
+msgid "Z cieniem"
+msgstr "With shadow"
+
+msgid "Zaokrąglony"
+msgstr "Rounded"
+
+msgid "Diagonalny"
+msgstr "Diagonal"
+
+msgid "Z ikoną"
+msgstr "With icon"
+
+msgid "Przezroczysty"
+msgstr "Transparent"
+
+msgid "Neonowy"
+msgstr "Neon"
+
+msgid "Klasyczny premium"
+msgstr "Classic premium"
+

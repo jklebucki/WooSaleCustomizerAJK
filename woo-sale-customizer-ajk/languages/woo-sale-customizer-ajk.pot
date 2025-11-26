@@ -1,0 +1,114 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: WooSaleCustomizerAJK 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-27 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: woo-sale-customizer-ajk.php:55
+msgid "PROMOCJA"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:73
+#: woo-sale-customizer-ajk.php:74
+msgid "Sale Customizer AJK"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:105
+msgid "Settings saved."
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:108
+msgid "PROMOCJA"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:118
+msgid "WooSaleCustomizerAJK – Ustawienia"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:129
+msgid "Tekst etykiety \"Sale\""
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:141
+msgid "Ten tekst pojawi się zamiast domyślnego \"Sale\" na produktach w promocji."
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:148
+msgid "Styl etykiety"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:164
+msgid "Wybierz styl wizualny etykiety sale."
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:170
+msgid "Podgląd"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:179
+msgid "Podgląd etykiety z wybranym stylem i tekstem."
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:185
+msgid "Zapisz"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:227
+#: woo-sale-customizer-ajk.php:228
+msgid "PROMOCJA"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:245
+msgid "Minimalistyczny"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:246
+msgid "Gradientowy"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:247
+msgid "Pulsujący"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:248
+msgid "Z cieniem"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:249
+msgid "Zaokrąglony"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:250
+msgid "Diagonalny"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:251
+msgid "Z ikoną"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:252
+msgid "Przezroczysty"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:253
+msgid "Neonowy"
+msgstr ""
+
+#: woo-sale-customizer-ajk.php:254
+msgid "Klasyczny premium"
+msgstr ""
+
