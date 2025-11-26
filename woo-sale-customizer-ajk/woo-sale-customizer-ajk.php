@@ -3,7 +3,7 @@
  * Plugin Name: WooSaleCustomizerAJK
  * Plugin URI: https://github.com/jklebucki/WooSaleCustomizerAJK
  * Description: Customizacja etykiety "Sale" w WooCommerce (AJK).
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Jarosław Kłębucki
  * Author URI: https://github.com/jklebucki
  * License: GPL v2 or later
@@ -76,6 +76,9 @@ class WooSaleCustomizerAJK {
 
     const OPTION_KEY = 'woosale_customizer_ajk_label';
     const OPTION_STYLE_KEY = 'woosale_customizer_ajk_style';
+    const OPTION_FONT_SIZE_KEY = 'woosale_customizer_ajk_font_size';
+    const OPTION_FONT_WEIGHT_KEY = 'woosale_customizer_ajk_font_weight';
+    const OPTION_FONT_ITALIC_KEY = 'woosale_customizer_ajk_font_italic';
 
     public function __construct() {
         // Sprawdź kompatybilność z WooCommerce przed inicjalizacją
@@ -203,6 +206,15 @@ class WooSaleCustomizerAJK {
         if ( get_option( self::OPTION_STYLE_KEY ) === false ) {
             add_option( self::OPTION_STYLE_KEY, '1' );
         }
+        if ( get_option( self::OPTION_FONT_SIZE_KEY ) === false ) {
+            add_option( self::OPTION_FONT_SIZE_KEY, '11' );
+        }
+        if ( get_option( self::OPTION_FONT_WEIGHT_KEY ) === false ) {
+            add_option( self::OPTION_FONT_WEIGHT_KEY, '700' );
+        }
+        if ( get_option( self::OPTION_FONT_ITALIC_KEY ) === false ) {
+            add_option( self::OPTION_FONT_ITALIC_KEY, '0' );
+        }
     }
 
     /**
@@ -245,8 +257,25 @@ class WooSaleCustomizerAJK {
                 $style = 1;
             }
 
+            $font_size = isset( $_POST['woosale_customizer_ajk_font_size'] )
+                ? absint( $_POST['woosale_customizer_ajk_font_size'] )
+                : 11;
+
+            if ( $font_size < 8 || $font_size > 24 ) {
+                $font_size = 11;
+            }
+
+            $font_weight = isset( $_POST['woosale_customizer_ajk_font_weight'] )
+                ? sanitize_text_field( wp_unslash( $_POST['woosale_customizer_ajk_font_weight'] ) )
+                : '700';
+
+            $font_italic = isset( $_POST['woosale_customizer_ajk_font_italic'] ) ? '1' : '0';
+
             update_option( self::OPTION_KEY, $label );
             update_option( self::OPTION_STYLE_KEY, $style );
+            update_option( self::OPTION_FONT_SIZE_KEY, $font_size );
+            update_option( self::OPTION_FONT_WEIGHT_KEY, $font_weight );
+            update_option( self::OPTION_FONT_ITALIC_KEY, $font_italic );
 
             echo '<div class="updated"><p>' . esc_html__( 'Settings saved.', 'woo-sale-customizer-ajk' ) . '</p></div>';
         }
@@ -257,13 +286,19 @@ class WooSaleCustomizerAJK {
         if ( $current_style < 1 || $current_style > 10 ) {
             $current_style = 1;
         }
+        $current_font_size = get_option( self::OPTION_FONT_SIZE_KEY, '11' );
+        $current_font_weight = get_option( self::OPTION_FONT_WEIGHT_KEY, '700' );
+        $current_font_italic = get_option( self::OPTION_FONT_ITALIC_KEY, '0' );
         $available_styles = $this->get_available_styles();
         ?>
 
         <div class="wrap">
             <h1><?php esc_html_e( 'WooSaleCustomizerAJK – Ustawienia', 'woo-sale-customizer-ajk' ); ?></h1>
 
-            <?php echo $this->generate_styles_css(); ?>
+            <?php 
+            // Wyjście CSS bezpośrednio (bez echo z escapowaniem)
+            $this->output_admin_styles(); 
+            ?>
 
             <form method="post" id="woosale-customizer-form">
                 <?php wp_nonce_field( 'woosale_customizer_ajk_save', 'woosale_customizer_ajk_nonce' ); ?>
@@ -313,16 +348,82 @@ class WooSaleCustomizerAJK {
                     </tr>
                     <tr>
                         <th scope="row">
+                            <label for="woosale_customizer_ajk_font_size">
+                                <?php esc_html_e( 'Wielkość czcionki', 'woo-sale-customizer-ajk' ); ?>
+                            </label>
+                        </th>
+                        <td>
+                            <input
+                                name="woosale_customizer_ajk_font_size"
+                                id="woosale_customizer_ajk_font_size"
+                                type="number"
+                                min="8"
+                                max="24"
+                                class="small-text"
+                                value="<?php echo esc_attr( $current_font_size ); ?>"
+                            /> px
+                            <p class="description">
+                                <?php esc_html_e( 'Rozmiar czcionki w pikselach (8-24).', 'woo-sale-customizer-ajk' ); ?>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="woosale_customizer_ajk_font_weight">
+                                <?php esc_html_e( 'Pogrubienie czcionki', 'woo-sale-customizer-ajk' ); ?>
+                            </label>
+                        </th>
+                        <td>
+                            <select
+                                name="woosale_customizer_ajk_font_weight"
+                                id="woosale_customizer_ajk_font_weight"
+                                class="regular-text"
+                            >
+                                <option value="400" <?php selected( $current_font_weight, '400' ); ?>><?php esc_html_e( 'Normalna', 'woo-sale-customizer-ajk' ); ?></option>
+                                <option value="500" <?php selected( $current_font_weight, '500' ); ?>><?php esc_html_e( 'Średnia', 'woo-sale-customizer-ajk' ); ?></option>
+                                <option value="600" <?php selected( $current_font_weight, '600' ); ?>><?php esc_html_e( 'Półgruba', 'woo-sale-customizer-ajk' ); ?></option>
+                                <option value="700" <?php selected( $current_font_weight, '700' ); ?>><?php esc_html_e( 'Gruba', 'woo-sale-customizer-ajk' ); ?></option>
+                                <option value="800" <?php selected( $current_font_weight, '800' ); ?>><?php esc_html_e( 'Bardzo gruba', 'woo-sale-customizer-ajk' ); ?></option>
+                            </select>
+                            <p class="description">
+                                <?php esc_html_e( 'Stopień pogrubienia czcionki.', 'woo-sale-customizer-ajk' ); ?>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="woosale_customizer_ajk_font_italic">
+                                <?php esc_html_e( 'Kursywa', 'woo-sale-customizer-ajk' ); ?>
+                            </label>
+                        </th>
+                        <td>
+                            <label>
+                                <input
+                                    name="woosale_customizer_ajk_font_italic"
+                                    id="woosale_customizer_ajk_font_italic"
+                                    type="checkbox"
+                                    value="1"
+                                    <?php checked( $current_font_italic, '1' ); ?>
+                                />
+                                <?php esc_html_e( 'Włącz kursywę', 'woo-sale-customizer-ajk' ); ?>
+                            </label>
+                            <p class="description">
+                                <?php esc_html_e( 'Zaznacz aby tekst był pochylony.', 'woo-sale-customizer-ajk' ); ?>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
                             <?php esc_html_e( 'Podgląd', 'woo-sale-customizer-ajk' ); ?>
                         </th>
                         <td>
-                            <div style="position: relative; width: 200px; height: 200px; background: #f5f5f5; border: 1px solid #ddd; padding: 20px; margin: 20px 0;">
-                                <span class="onsale woosale-preview" id="woosale-preview" style="position: absolute; top: 10px; left: 10px;">
+                            <div style="position: relative; width: 300px; height: 200px; background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"300\" height=\"200\"><rect fill=\"%23f5f5f5\" width=\"300\" height=\"200\"/><text x=\"50%\" y=\"50%\" font-size=\"14\" fill=\"%23999\" text-anchor=\"middle\" dy=\".3em\">Podgląd produktu</text></svg>'); border: 1px solid #ddd; margin: 20px 0; border-radius: 8px; overflow: hidden;">
+                                <span class="onsale woosale-preview" id="woosale-preview">
                                     <?php echo esc_html( $current_label ); ?>
                                 </span>
                             </div>
                             <p class="description">
-                                <?php esc_html_e( 'Podgląd etykiety z wybranym stylem i tekstem.', 'woo-sale-customizer-ajk' ); ?>
+                                <?php esc_html_e( 'Podgląd etykiety z wybranym stylem, tekstem i czcionką.', 'woo-sale-customizer-ajk' ); ?>
                             </p>
                         </td>
                     </tr>
@@ -336,11 +437,17 @@ class WooSaleCustomizerAJK {
         (function() {
             var styleSelect = document.getElementById('woosale_customizer_ajk_style');
             var labelInput = document.getElementById('woosale_customizer_ajk_label');
+            var fontSizeInput = document.getElementById('woosale_customizer_ajk_font_size');
+            var fontWeightSelect = document.getElementById('woosale_customizer_ajk_font_weight');
+            var fontItalicCheckbox = document.getElementById('woosale_customizer_ajk_font_italic');
             var preview = document.getElementById('woosale-preview');
 
             function updatePreview() {
                 var selectedStyle = styleSelect.value;
                 var labelText = labelInput.value || '<?php echo esc_js( __( 'PROMOCJA', 'woo-sale-customizer-ajk' ) ); ?>';
+                var fontSize = fontSizeInput.value || '11';
+                var fontWeight = fontWeightSelect.value || '700';
+                var fontItalic = fontItalicCheckbox.checked;
                 
                 // Usuń wszystkie klasy stylu
                 preview.className = 'onsale woosale-preview';
@@ -348,11 +455,18 @@ class WooSaleCustomizerAJK {
                 preview.classList.add('woosale-style-' + selectedStyle);
                 // Zaktualizuj tekst
                 preview.textContent = labelText;
+                // Zaktualizuj style czcionki
+                preview.style.fontSize = fontSize + 'px';
+                preview.style.fontWeight = fontWeight;
+                preview.style.fontStyle = fontItalic ? 'italic' : 'normal';
             }
 
             if (styleSelect && labelInput && preview) {
                 styleSelect.addEventListener('change', updatePreview);
                 labelInput.addEventListener('input', updatePreview);
+                fontSizeInput.addEventListener('input', updatePreview);
+                fontWeightSelect.addEventListener('change', updatePreview);
+                fontItalicCheckbox.addEventListener('change', updatePreview);
                 updatePreview();
             }
         })();
@@ -378,7 +492,15 @@ class WooSaleCustomizerAJK {
             $style = 1;
         }
 
-        return '<span class="onsale woosale-style-' . esc_attr( $style ) . '">' . esc_html( $label ) . '</span>';
+        $font_size = get_option( self::OPTION_FONT_SIZE_KEY, '11' );
+        $font_weight = get_option( self::OPTION_FONT_WEIGHT_KEY, '700' );
+        $font_italic = get_option( self::OPTION_FONT_ITALIC_KEY, '0' );
+
+        $inline_style = 'font-size: ' . esc_attr( $font_size ) . 'px !important; ';
+        $inline_style .= 'font-weight: ' . esc_attr( $font_weight ) . ' !important; ';
+        $inline_style .= 'font-style: ' . ( $font_italic === '1' ? 'italic' : 'normal' ) . ' !important;';
+
+        return '<span class="onsale woosale-style-' . esc_attr( $style ) . '" style="' . $inline_style . '">' . esc_html( $label ) . '</span>';
     }
 
     /**
@@ -402,81 +524,84 @@ class WooSaleCustomizerAJK {
     }
 
     /**
-     * Generuj CSS dla wszystkich stylów
-     *
-     * @return string
+     * Wyjście CSS stylów bezpośrednio dla strony admina
      */
-    public function generate_styles_css() {
-        ob_start();
+    public function output_admin_styles() {
+        // Bezpośrednie wypisanie CSS bez bufora
+        $this->generate_styles_css_direct();
+    }
+
+    /**
+     * Generuj CSS bezpośrednio (bez bufora)
+     */
+    public function generate_styles_css_direct() {
         ?>
         <style id="woosale-customizer-ajk-styles">
         /* Style 1: Minimalistyczny - UX 2025 */
         .woosale-style-1.onsale {
-            background: rgba(255, 255, 255, 0.98) !important;
+            background: rgba(255, 255, 255, 0.3) !important;
             color: #DC2626 !important;
-            border: 2px solid #DC2626 !important;
-            padding: 8px 16px !important;
-            font-size: 13px !important;
-            font-weight: 600 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.8px !important;
+            border: 2px solid rgba(220, 38, 38, 0.6) !important;
+            padding: 4px 10px !important;
             border-radius: 6px !important;
             line-height: 1.2 !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             position: absolute !important;
-            top: 12px !important;
-            left: 12px !important;
+            top: 8px !important;
+            right: 8px !important;
+            left: auto !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
-            transition: transform 0.2s ease !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+            transition: all 0.2s ease !important;
+            backdrop-filter: blur(4px) !important;
+            -webkit-backdrop-filter: blur(4px) !important;
         }
         .woosale-style-1.onsale:hover {
+            background: rgba(255, 255, 255, 0.5) !important;
             transform: scale(1.05) !important;
         }
 
         /* Style 2: Gradientowy - UX 2025 */
         .woosale-style-2.onsale {
-            background: linear-gradient(135deg, #EF4444 0%, #F97316 100%) !important;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.35) 0%, rgba(249, 115, 22, 0.35) 100%) !important;
             color: #ffffff !important;
-            padding: 8px 18px !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.8px !important;
+            padding: 4px 12px !important;
             border-radius: 8px !important;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+            box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3) !important;
             line-height: 1.2 !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             position: absolute !important;
-            top: 12px !important;
-            left: 12px !important;
+            top: 8px !important;
+            right: 8px !important;
+            left: auto !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
-            border: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
             transition: all 0.3s ease !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
         }
         .woosale-style-2.onsale:hover {
-            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35), 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.5) 0%, rgba(249, 115, 22, 0.5) 100%) !important;
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4) !important;
             transform: translateY(-2px) !important;
         }
 
         /* Style 3: Pulsujący - UX 2025 (subtelniejszy) */
         .woosale-style-3.onsale {
-            background: #DC2626 !important;
+            background: rgba(220, 38, 38, 0.35) !important;
             color: #ffffff !important;
-            padding: 8px 18px !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
+            padding: 4px 12px !important;
             border-radius: 8px !important;
             animation: woosale-pulse-2025 3s ease-in-out infinite !important;
             line-height: 1.2 !important;
@@ -484,238 +609,255 @@ class WooSaleCustomizerAJK {
             align-items: center !important;
             justify-content: center !important;
             position: absolute !important;
-            top: 12px !important;
-            left: 12px !important;
+            top: 8px !important;
+            right: 8px !important;
+            left: auto !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
-            border: none !important;
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 2px 10px rgba(220, 38, 38, 0.3) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
         }
         @keyframes woosale-pulse-2025 {
-            0%, 100% { box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25); }
-            50% { box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4); }
+            0%, 100% { box-shadow: 0 2px 10px rgba(220, 38, 38, 0.3); }
+            50% { box-shadow: 0 4px 16px rgba(220, 38, 38, 0.5); }
         }
 
         /* Style 4: Premium shadow - UX 2025 */
         .woosale-style-4.onsale {
-            background: #1F2937 !important;
+            background: rgba(31, 41, 55, 0.4) !important;
             color: #ffffff !important;
-            padding: 10px 20px !important;
-            font-size: 14px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
+            padding: 5px 14px !important;
             border-radius: 10px !important;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15) !important;
-            text-shadow: none !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
             line-height: 1.2 !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             position: absolute !important;
-            top: 12px !important;
-            left: 12px !important;
+            top: 8px !important;
+            right: 8px !important;
+            left: auto !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
-            border: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
         }
         .woosale-style-4.onsale:hover {
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25), 0 6px 12px rgba(0, 0, 0, 0.2) !important;
-            transform: translateY(-3px) !important;
+            background: rgba(31, 41, 55, 0.55) !important;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+            transform: translateY(-2px) !important;
         }
 
         /* Style 5: Pill - UX 2025 */
         .woosale-style-5.onsale {
-            background: #FEF2F2 !important;
+            background: rgba(254, 242, 242, 0.35) !important;
             color: #DC2626 !important;
-            padding: 10px 20px !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            border-radius: 24px !important;
-            border: 2px solid #FCA5A5 !important;
+            padding: 5px 14px !important;
+            border-radius: 20px !important;
+            border: 2px solid rgba(252, 165, 165, 0.5) !important;
             line-height: 1.2 !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             position: absolute !important;
-            top: 12px !important;
-            left: 12px !important;
+            top: 8px !important;
+            right: 8px !important;
+            left: auto !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
-            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1) !important;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15) !important;
             transition: all 0.2s ease !important;
+            backdrop-filter: blur(6px) !important;
+            -webkit-backdrop-filter: blur(6px) !important;
         }
         .woosale-style-5.onsale:hover {
-            background: #FEE2E2 !important;
-            border-color: #F87171 !important;
+            background: rgba(254, 226, 226, 0.5) !important;
+            border-color: rgba(248, 113, 113, 0.7) !important;
             transform: scale(1.03) !important;
         }
 
         /* Style 6: Ribbon - UX 2025 (mniej nachylony dla czytelności) */
         .woosale-style-6.onsale {
-            background: #DC2626 !important;
+            background: rgba(220, 38, 38, 0.35) !important;
             color: #ffffff !important;
-            padding: 10px 24px !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 1px !important;
-            transform: rotate(-3deg) !important;
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+            padding: 5px 16px !important;
+            letter-spacing: 0.5px !important;
+            transform: rotate(-2deg) !important;
+            box-shadow: 0 2px 10px rgba(220, 38, 38, 0.3) !important;
             line-height: 1.2 !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             position: absolute !important;
-            top: 12px !important;
-            left: 12px !important;
+            top: 8px !important;
+            right: 8px !important;
+            left: auto !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
-            border: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
             border-radius: 4px !important;
             transition: transform 0.3s ease !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
         }
         .woosale-style-6.onsale:hover {
-            transform: rotate(-3deg) scale(1.05) !important;
+            transform: rotate(-2deg) scale(1.05) !important;
         }
 
         /* Style 7: Z ikoną - UX 2025 */
         .woosale-style-7.onsale {
-            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%) !important;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.35) 0%, rgba(185, 28, 28, 0.35) 100%) !important;
             color: #ffffff !important;
-            padding: 10px 20px 10px 18px !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
+            padding: 5px 12px 5px 10px !important;
             border-radius: 8px !important;
             line-height: 1.2 !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: 6px !important;
+            gap: 4px !important;
             position: absolute !important;
-            top: 12px !important;
-            left: 12px !important;
+            top: 8px !important;
+            right: 8px !important;
+            left: auto !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
-            border: none !important;
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 2px 10px rgba(220, 38, 38, 0.3) !important;
             transition: all 0.3s ease !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
         }
         .woosale-style-7.onsale::before {
             content: "🔥" !important;
-            font-size: 16px !important;
+            font-size: 14px !important;
             margin: 0 !important;
         }
         .woosale-style-7.onsale:hover {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.5) 0%, rgba(185, 28, 28, 0.5) 100%) !important;
             transform: scale(1.05) !important;
-            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35) !important;
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4) !important;
         }
 
         /* Style 8: Glass morphism - UX 2025 */
         .woosale-style-8.onsale {
             background: rgba(220, 38, 38, 0.15) !important;
             color: #1F2937 !important;
-            padding: 10px 20px !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
+            padding: 5px 14px !important;
             border-radius: 12px !important;
-            backdrop-filter: blur(12px) saturate(180%) !important;
-            -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
-            border: 2px solid rgba(220, 38, 38, 0.3) !important;
+            backdrop-filter: blur(16px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+            border: 2px solid rgba(220, 38, 38, 0.25) !important;
             line-height: 1.2 !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             position: absolute !important;
-            top: 12px !important;
-            left: 12px !important;
+            top: 8px !important;
+            right: 8px !important;
+            left: auto !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
-            box-shadow: 0 8px 32px rgba(220, 38, 38, 0.15) !important;
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.2) !important;
             transition: all 0.3s ease !important;
         }
         .woosale-style-8.onsale:hover {
             background: rgba(220, 38, 38, 0.25) !important;
-            border-color: rgba(220, 38, 38, 0.5) !important;
+            border-color: rgba(220, 38, 38, 0.4) !important;
         }
 
         /* Style 9: Neon accent - UX 2025 (bardziej subtelny) */
         .woosale-style-9.onsale {
-            background: #DC2626 !important;
+            background: rgba(220, 38, 38, 0.35) !important;
             color: #ffffff !important;
-            padding: 10px 20px !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
+            padding: 5px 14px !important;
             border-radius: 8px !important;
-            border: 2px solid #FCA5A5 !important;
-            box-shadow: 0 0 20px rgba(220, 38, 38, 0.4), 0 4px 12px rgba(220, 38, 38, 0.3) !important;
-            text-shadow: none !important;
+            border: 2px solid rgba(252, 165, 165, 0.5) !important;
+            box-shadow: 0 0 16px rgba(220, 38, 38, 0.4), 0 2px 10px rgba(220, 38, 38, 0.3) !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
             line-height: 1.2 !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             position: absolute !important;
-            top: 12px !important;
-            left: 12px !important;
+            top: 8px !important;
+            right: 8px !important;
+            left: auto !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
             animation: woosale-neon-glow 2s ease-in-out infinite !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
         }
         @keyframes woosale-neon-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.4), 0 4px 12px rgba(220, 38, 38, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(220, 38, 38, 0.6), 0 4px 12px rgba(220, 38, 38, 0.4); }
+            0%, 100% { box-shadow: 0 0 16px rgba(220, 38, 38, 0.4), 0 2px 10px rgba(220, 38, 38, 0.3); }
+            50% { box-shadow: 0 0 24px rgba(220, 38, 38, 0.6), 0 2px 10px rgba(220, 38, 38, 0.4); }
         }
 
         /* Style 10: Premium gold - UX 2025 */
         .woosale-style-10.onsale {
-            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.35) 0%, rgba(217, 119, 6, 0.35) 100%) !important;
             color: #ffffff !important;
-            padding: 10px 22px !important;
-            font-size: 14px !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 1px !important;
+            padding: 5px 16px !important;
+            letter-spacing: 0.5px !important;
             border-radius: 10px !important;
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3), 0 2px 8px rgba(0, 0, 0, 0.15) !important;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
-            border: 2px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 3px 14px rgba(245, 158, 11, 0.3) !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+            border: 2px solid rgba(255, 255, 255, 0.25) !important;
             line-height: 1.2 !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             position: absolute !important;
-            top: 12px !important;
-            left: 12px !important;
+            top: 8px !important;
+            right: 8px !important;
+            left: auto !important;
             z-index: 999 !important;
             width: auto !important;
             height: auto !important;
             margin: 0 !important;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
         }
         .woosale-style-10.onsale:hover {
-            box-shadow: 0 8px 28px rgba(245, 158, 11, 0.4), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.5) 0%, rgba(217, 119, 6, 0.5) 100%) !important;
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4) !important;
             transform: translateY(-2px) scale(1.02) !important;
         }
         </style>
         <?php
+    }
+
+    /**
+     * Generuj CSS dla wszystkich stylów (z buforem dla wp_head)
+     *
+     * @return string
+     */
+    public function generate_styles_css() {
+        ob_start();
+        $this->generate_styles_css_direct();
         return ob_get_clean();
     }
 
