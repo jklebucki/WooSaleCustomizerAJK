@@ -92,8 +92,8 @@ class WooSaleCustomizerAJK {
         // Dodanie strony ustawień w WooCommerce
         add_action( 'admin_menu', array( $this, 'add_admin_menu' ), 99 );
 
-        // Filtr WooCommerce – podmiana etykiety "Sale" (wysoki priorytet aby nadpisać wszystkie inne)
-        add_filter( 'woocommerce_sale_flash', array( $this, 'filter_sale_flash' ), 999, 3 );
+        // Usuń wszystkie poprzednie hooki dla sale_flash i dodaj nasz
+        add_action( 'wp_loaded', array( $this, 'remove_default_sale_flash' ), 999 );
 
         // Dodanie CSS stylów do head
         add_action( 'wp_head', array( $this, 'output_styles' ) );
@@ -108,6 +108,17 @@ class WooSaleCustomizerAJK {
             false,
             dirname( plugin_basename( __FILE__ ) ) . '/languages'
         );
+    }
+
+    /**
+     * Usuń domyślne hooki sale_flash aby zapobiec duplikacji
+     */
+    public function remove_default_sale_flash() {
+        // Usuń wszystkie hooki przypisane do woocommerce_sale_flash
+        remove_all_filters( 'woocommerce_sale_flash', 10 );
+        
+        // Dodaj ponownie tylko nasz hook
+        add_filter( 'woocommerce_sale_flash', array( $this, 'filter_sale_flash' ), 10, 3 );
     }
 
     /**
