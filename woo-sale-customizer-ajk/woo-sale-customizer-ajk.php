@@ -95,6 +95,15 @@ class WooSaleCustomizerAJK {
         // Usuń wszystkie poprzednie hooki dla sale_flash i dodaj nasz
         add_action( 'wp_loaded', array( $this, 'remove_default_sale_flash' ), 999 );
 
+        // Uniwersalne ukrywanie etykiet sale z różnych motywów
+        add_action( 'wp_head', array( $this, 'hide_theme_sale_badges' ), 999 );
+        
+        // Wyłączenie etykiet sale w popularnych motywach przez ich filtry
+        add_filter( 'astra_woo_shop_sale_badge_enabled', '__return_false', 999 );
+        add_filter( 'kadence_woocommerce_product_sale_flash', '__return_false', 999 );
+        add_filter( 'flatsome_sale_flash', '__return_false', 999 );
+        add_filter( 'oceanwp_display_sale_badge', '__return_false', 999 );
+
         // Dodanie CSS stylów do head
         add_action( 'wp_head', array( $this, 'output_styles' ) );
     }
@@ -119,6 +128,69 @@ class WooSaleCustomizerAJK {
         
         // Dodaj ponownie tylko nasz hook
         add_filter( 'woocommerce_sale_flash', array( $this, 'filter_sale_flash' ), 10, 3 );
+    }
+
+    /**
+     * Ukryj etykiety sale z różnych motywów za pomocą CSS (uniwersalne rozwiązanie)
+     */
+    public function hide_theme_sale_badges() {
+        ?>
+        <style type="text/css">
+            /* Uniwersalne ukrywanie etykiet sale z motywów WordPress */
+            
+            /* Motywy: Astra */
+            .ast-onsale-card,
+            .ast-on-card-button.ast-onsale-card {
+                display: none !important;
+            }
+            
+            /* Motywy: Kadence */
+            .kadence-sale-badge,
+            .product-label.sale-badge {
+                display: none !important;
+            }
+            
+            /* Motywy: OceanWP */
+            .owp-sale-badge,
+            .outofstock-badge {
+                display: none !important;
+            }
+            
+            /* Motywy: Flatsome */
+            .sale-label,
+            .badge-container .sale-bubble {
+                display: none !important;
+            }
+            
+            /* Motywy: Storefront */
+            .storefront-sale-flash {
+                display: none !important;
+            }
+            
+            /* Motywy: GeneratePress */
+            .generate-sale-flash {
+                display: none !important;
+            }
+            
+            /* Motywy: Neve */
+            .nv-sale-badge {
+                display: none !important;
+            }
+            
+            /* Motywy: Blocksy */
+            .ct-sale-badge {
+                display: none !important;
+            }
+            
+            /* Dodatkowe selektory dla innych motywów */
+            .theme-sale-badge,
+            .product-sale-flash,
+            .woo-sale-badge,
+            span.onsale:not(.woosale-style-1):not(.woosale-style-2):not(.woosale-style-3):not(.woosale-style-4):not(.woosale-style-5):not(.woosale-style-6):not(.woosale-style-7):not(.woosale-style-8):not(.woosale-style-9):not(.woosale-style-10):not(.woosale-preview) {
+                display: none !important;
+            }
+        </style>
+        <?php
     }
 
     /**
@@ -340,40 +412,69 @@ class WooSaleCustomizerAJK {
         <style id="woosale-customizer-ajk-styles">
         /* Style 1: Minimalistyczny */
         .woosale-style-1.onsale {
-            background: rgba(255, 255, 255, 0.85);
-            color: #e74c3c;
-            border: 2px solid #e74c3c;
-            padding: 5px 12px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.85) !important;
+            color: #e74c3c !important;
+            border: 2px solid #e74c3c !important;
+            padding: 5px 12px !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            border-radius: 3px !important;
+            line-height: normal !important;
+            display: inline-block !important;
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
         }
 
         /* Style 2: Gradientowy */
         .woosale-style-2.onsale {
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.85) 0%, rgba(255, 142, 83, 0.85) 100%);
-            color: #ffffff;
-            padding: 6px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 4px;
-            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.85) 0%, rgba(255, 142, 83, 0.85) 100%) !important;
+            color: #ffffff !important;
+            padding: 6px 14px !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            border-radius: 4px !important;
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3) !important;
+            line-height: normal !important;
+            display: inline-block !important;
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            border: none !important;
         }
 
         /* Style 3: Pulsujący */
         .woosale-style-3.onsale {
-            background: rgba(231, 76, 60, 0.85);
-            color: #ffffff;
-            padding: 6px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 4px;
-            animation: woosale-pulse 2s ease-in-out infinite;
+            background: rgba(231, 76, 60, 0.85) !important;
+            color: #ffffff !important;
+            padding: 6px 14px !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border-radius: 4px !important;
+            animation: woosale-pulse 2s ease-in-out infinite !important;
+            line-height: normal !important;
+            display: inline-block !important;
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            border: none !important;
         }
         @keyframes woosale-pulse {
             0%, 100% { transform: scale(1); opacity: 1; }
@@ -382,98 +483,164 @@ class WooSaleCustomizerAJK {
 
         /* Style 4: Z cieniem */
         .woosale-style-4.onsale {
-            background: rgba(44, 62, 80, 0.85);
-            color: #ffffff;
-            padding: 7px 15px;
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            background: rgba(44, 62, 80, 0.85) !important;
+            color: #ffffff !important;
+            padding: 7px 15px !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border-radius: 4px !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+            line-height: normal !important;
+            display: inline-block !important;
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            border: none !important;
         }
 
         /* Style 5: Zaokrąglony */
         .woosale-style-5.onsale {
-            background: rgba(255, 182, 193, 0.85);
-            color: #8b4c6b;
-            padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            border-radius: 20px;
-            border: 2px solid #ff91a4;
+            background: rgba(255, 182, 193, 0.85) !important;
+            color: #8b4c6b !important;
+            padding: 8px 16px !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            border-radius: 20px !important;
+            border: 2px solid #ff91a4 !important;
+            line-height: normal !important;
+            display: inline-block !important;
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
         }
 
         /* Style 6: Diagonalny */
         .woosale-style-6.onsale {
-            background: rgba(231, 76, 60, 0.85);
-            color: #ffffff;
-            padding: 8px 20px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transform: rotate(-5deg);
-            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.4);
+            background: rgba(231, 76, 60, 0.85) !important;
+            color: #ffffff !important;
+            padding: 8px 20px !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            transform: rotate(-5deg) !important;
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.4) !important;
+            line-height: normal !important;
+            display: inline-block !important;
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            border: none !important;
         }
 
         /* Style 7: Z ikoną */
         .woosale-style-7.onsale {
-            background: rgba(255, 107, 107, 0.85);
-            color: #ffffff;
-            padding: 6px 14px 6px 10px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 4px;
+            background: rgba(255, 107, 107, 0.85) !important;
+            color: #ffffff !important;
+            padding: 6px 14px 6px 10px !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border-radius: 4px !important;
+            line-height: normal !important;
+            display: inline-block !important;
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            border: none !important;
         }
         .woosale-style-7.onsale::before {
-            content: "🔥 ";
-            margin-right: 4px;
+            content: "🔥 " !important;
+            margin-right: 4px !important;
         }
 
         /* Style 8: Przezroczysty */
         .woosale-style-8.onsale {
-            background: rgba(231, 76, 60, 0.85);
-            color: #ffffff;
-            padding: 6px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 4px;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(231, 76, 60, 0.85) !important;
+            color: #ffffff !important;
+            padding: 6px 14px !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border-radius: 4px !important;
+            backdrop-filter: blur(5px) !important;
+            -webkit-backdrop-filter: blur(5px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            line-height: normal !important;
+            display: inline-block !important;
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
         }
 
         /* Style 9: Neonowy */
         .woosale-style-9.onsale {
-            background: rgba(10, 10, 10, 0.85);
-            color: #00ffff;
-            padding: 6px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 4px;
-            border: 2px solid #00ffff;
-            box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, inset 0 0 10px rgba(0, 255, 255, 0.2);
-            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+            background: rgba(10, 10, 10, 0.85) !important;
+            color: #00ffff !important;
+            padding: 6px 14px !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border-radius: 4px !important;
+            border: 2px solid #00ffff !important;
+            box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, inset 0 0 10px rgba(0, 255, 255, 0.2) !important;
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff !important;
+            line-height: normal !important;
+            display: inline-block !important;
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
         }
 
         /* Style 10: Klasyczny premium */
         .woosale-style-10.onsale {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.85) 0%, rgba(184, 148, 31, 0.85) 100%);
-            color: #ffffff;
-            padding: 7px 16px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 4px;
-            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.85) 0%, rgba(184, 148, 31, 0.85) 100%) !important;
+            color: #ffffff !important;
+            padding: 7px 16px !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            border-radius: 4px !important;
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            line-height: normal !important;
+            display: inline-block !important;
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 999 !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
         }
         </style>
         <?php
